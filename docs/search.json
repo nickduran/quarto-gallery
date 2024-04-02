@@ -2,44 +2,44 @@
   {
     "objectID": "page-layout/tufte.html#margin-figures",
     "href": "page-layout/tufte.html#margin-figures",
-    "title": "A Quarto Page Layout Example",
+    "title": "An Example Using the Tufte Style",
     "section": "Margin Figures",
-    "text": "Margin Figures\nImages and graphics play an integral role in Tufte’s work. To place figures in the margin you can use the Quarto chunk option column: margin. For example:\n\nlibrary(ggplot2)\n\nWarning: replacing previous import 'lifecycle::last_warnings' by\n'rlang::last_warnings' when loading 'tibble'\n\nmtcars2 <- mtcars\nmtcars2$am <- factor(\n  mtcars$am, labels = c('automatic', 'manual')\n)\nggplot(mtcars2, aes(hp, mpg, color = am)) +\n  geom_point() + geom_smooth() +\n  theme(legend.position = 'bottom')\n\n\n\n\n\nFigure 1: MPG vs horsepower, colored by transmission.\n\n\n\nNote the use of the fig-cap chunk option to provide a figure caption. You can adjust the proportions of figures using the fig-width and fig-height chunk options. These are specified in inches, and will be automatically scaled down to fit within the handout margin."
+    "text": "Margin Figures\nImages and graphics play an integral role in Tufte’s work. To place figures in the margin you can use the Quarto chunk option column: margin. For example:\n\n```{r}\n#| label: fig-margin\n#| fig-cap: \"MPG vs horsepower, colored by transmission.\"\n#| column: margin\n#| message: false\nlibrary(ggplot2)\nmtcars2 &lt;- mtcars\nmtcars2$am &lt;- factor(\n  mtcars$am, labels = c('automatic', 'manual')\n)\nggplot(mtcars2, aes(hp, mpg, color = am)) +\n  geom_point() + geom_smooth() +\n  theme(legend.position = 'bottom')\n```\n\n\n\n\n\nFigure 1: MPG vs horsepower, colored by transmission.\n\n\n\nNote the use of the fig-cap chunk option to provide a figure caption. You can adjust the proportions of figures using the fig-width and fig-height chunk options. These are specified in inches, and will be automatically scaled down to fit within the handout margin."
   },
   {
     "objectID": "page-layout/tufte.html#arbitrary-margin-content",
     "href": "page-layout/tufte.html#arbitrary-margin-content",
-    "title": "A Quarto Page Layout Example",
+    "title": "An Example Using the Tufte Style",
     "section": "Arbitrary Margin Content",
     "text": "Arbitrary Margin Content\nYou can include anything in the margin by places the class .column-margin on the element. See an example on the right about the first fundamental theorem of calculus.\n\n\nWe know from the first fundamental theorem of calculus that for \\(x\\) in \\([a, b]\\):\n\\[\\frac{d}{dx}\\left( \\int_{a}^{x} f(u)\\,du\\right)=f(x).\\]"
   },
   {
     "objectID": "page-layout/tufte.html#full-width-figures",
     "href": "page-layout/tufte.html#full-width-figures",
-    "title": "A Quarto Page Layout Example",
+    "title": "An Example Using the Tufte Style",
     "section": "Full Width Figures",
-    "text": "Full Width Figures\nYou can arrange for figures to span across the entire page by using the chunk option fig-column: page-right.\n\nggplot(diamonds, aes(carat, price)) + geom_smooth() +\n  facet_grid(~ cut)\n\n\n\n\nFigure 2: A full width figure.\n\n\n\n\nOther chunk options related to figures can still be used, such as fig-width, fig-cap, and so on. For full width figures, usually fig-width is large and fig-height is small. In the above example, the plot size is \\(11 \\times 3\\)."
+    "text": "Full Width Figures\nYou can arrange for figures to span across the entire page by using the chunk option fig-column: page-right.\n\n```{r}\n#| label: fig-fullwidth\n#| fig-cap: \"A full width figure.\"\n#| fig-width: 11\n#| fig-height: 3\n#| fig-column: page-right\n#| warning: false\nggplot(diamonds, aes(carat, price)) + geom_smooth() +\n  facet_grid(~ cut)\n```\n\n\n\n\nFigure 2: A full width figure.\n\n\n\n\nOther chunk options related to figures can still be used, such as fig-width, fig-cap, and so on. For full width figures, usually fig-width is large and fig-height is small. In the above example, the plot size is \\(11 \\times 3\\)."
   },
   {
     "objectID": "page-layout/tufte.html#arbitrary-full-width-content",
     "href": "page-layout/tufte.html#arbitrary-full-width-content",
-    "title": "A Quarto Page Layout Example",
+    "title": "An Example Using the Tufte Style",
     "section": "Arbitrary Full Width Content",
     "text": "Arbitrary Full Width Content\nAny content can span to the full width of the page, simply place the element in a div and add the class column-page-right. For example, the following code will display its contents as full width.\n::: {.fullwidth}\nAny _full width_ content here.\n:::\nBelow is an example:\n\nR is free software and comes with ABSOLUTELY NO WARRANTY. You are welcome to redistribute it under the terms of the GNU General Public License versions 2 or 3. For more information about these matters see https://www.gnu.org/licenses/."
   },
   {
     "objectID": "page-layout/tufte.html#main-column-figures",
     "href": "page-layout/tufte.html#main-column-figures",
-    "title": "A Quarto Page Layout Example",
+    "title": "An Example Using the Tufte Style",
     "section": "Main Column Figures",
-    "text": "Main Column Figures\nBesides margin and full width figures, you can of course also include figures constrained to the main column. This is the default type of figures in the LaTeX/HTML output.\n\nggplot(diamonds, aes(cut, price)) + geom_boxplot()\n\n\n\n\nFigure 3: A figure in the main column."
+    "text": "Main Column Figures\nBesides margin and full width figures, you can of course also include figures constrained to the main column. This is the default type of figures in the LaTeX/HTML output.\n\n```{r}\n#| label: fig-main\n#| fig-cap: \"A figure in the main column.\"\nggplot(diamonds, aes(cut, price)) + geom_boxplot()\n```\n\n\n\n\nFigure 3: A figure in the main column."
   },
   {
     "objectID": "page-layout/tufte.html#margin-captions",
     "href": "page-layout/tufte.html#margin-captions",
-    "title": "A Quarto Page Layout Example",
+    "title": "An Example Using the Tufte Style",
     "section": "Margin Captions",
-    "text": "Margin Captions\nWhen you include a figure constrained to the main column, you can choose to place the figure’s caption in the margin by using the caption-location chunk option. For example:\n\nggplot(diamonds, aes(cut, price)) + geom_boxplot()\n\n\n\n\nFigure 4: A figure with a longer caption. The figure appears in the main column, but the caption is placed in the margin. Caption can even contain elements like a citation such as Xie, Allaire, and Grolemund (2018).\nXie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. “Tufte Handouts.” In, 137–46. Chapman; Hall/CRC. https://doi.org/10.1201/9781138359444-6."
+    "text": "Margin Captions\nWhen you include a figure constrained to the main column, you can choose to place the figure’s caption in the margin by using the cap-location chunk option. For example:\n\n```{r}\n#| label: fig-main-margin-cap\n#| fig-cap: \"A figure with a longer caption. The figure appears in the main column, but the caption is placed in the margin. Captions can even contain elements like a citation such as @xie2018.\"\n#| cap-location: margin\nggplot(diamonds, aes(cut, price)) + geom_boxplot()\n```\n\n\n\n\nFigure 4: A figure with a longer caption. The figure appears in the main column, but the caption is placed in the margin. Captions can even contain elements like a citation such as Xie, Allaire, and Grolemund (2018).\nXie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. “Tufte Handouts.” In R Markdown: The Definitive Guide, 137–46. Chapman; Hall/CRC. https://doi.org/10.1201/9781138359444-6."
   },
   {
     "objectID": "articles/html/html.html#introduction",
@@ -80,8 +80,8 @@
     "objectID": "presentations/revealjs/reveal.html#agenda",
     "href": "presentations/revealjs/reveal.html#agenda",
     "title": "Modernizing R&A Data Products With Python",
-    "section": "Agenda",
-    "text": "Agenda\n\nBackground\nDesign and Implementation\nShowcase\nPath forward"
+    "section": "",
+    "text": "Background\nDesign and Implementation\nShowcase\nPath forward"
   },
   {
     "objectID": "presentations/revealjs/reveal.html#motivation",
@@ -194,5 +194,257 @@
     "title": "Modernizing R&A Data Products With Python",
     "section": "Division of labor",
     "text": "Division of labor"
+  },
+  {
+    "objectID": "page-layout/tufte.html",
+    "href": "page-layout/tufte.html",
+    "title": "An Example Using the Tufte Style",
+    "section": "",
+    "text": "This document demonstrates the use of a number of advanced page layout features to produce an attractive and usable document inspired by the Tufte handout style and the use of Tufte’s styles in RMarkdown documents (Xie, Allaire, and Grolemund 2018). The Tufte handout style is a style that Edward Tufte uses in his books and handouts. Tufte’s style is known for its extensive use of sidenotes, tight integration of graphics with text, and well-set typography. Quarto1 supports most of the layout techniques that are used in the Tufte handout style for both HTML and LaTeX/PDF output.1 To learn more, you can read more about Quarto or visit Quarto’s Github repository.\n\nXie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. “Tufte Handouts.” In R Markdown: The Definitive Guide, 137–46. Chapman; Hall/CRC. https://doi.org/10.1201/9781138359444-6.\n---\ntitle: \"An Example Using the Tufte Style\"\nauthor: \"John Smith\"\nformat:\n  html:\n    grid:\n1      margin-width: 350px\n  pdf: default\n2reference-location: margin\ncitation-location: margin\n---\n\n1\n\nIncreases the width of the margin to make more room for sidenotes and margin figures (HTML only).\n\n2\n\nPlaces footnotes and cited sources in the margin. Other layout options (for example placing a figure in the margin) will be set per element in examples below.\n\n\nThese layout features are designed with two important goals in mind:\n\nTo produce both PDF and HTML output with similar styles from the same Quarto document;\nTo provide simple syntax to write elements of the Tufte style such as side notes and margin figures. If you’d like a figure placed in the margin, just set the option fig-column: margin for your code chunk, and we will take care of the details for you2.\n\n2 You never need to think about \\begin{marginfigure} or &lt;span class=\"marginfigure\"&gt;; the LaTeX and HTML code under the hood may be complicated, but you never need to learn or write such code.If you have any feature requests or find bugs in these capabilities, please do not hesitate to file them to https://github.com/quarto-dev/quarto-cli/issues."
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html",
+    "href": "presentations/beamer/beamer.html",
+    "title": "Pop Songs and Political Science",
+    "section": "",
+    "text": "Sheena Easton describes the following scenario for her baby:\n\nTakes the morning train\nWorks from nine ’til five\nTakes another train home again\nFinds Sheena Easton waiting for him"
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#sheena-easton-and-game-theory",
+    "href": "presentations/beamer/beamer.html#sheena-easton-and-game-theory",
+    "title": "Pop Songs and Political Science",
+    "section": "",
+    "text": "Sheena Easton describes the following scenario for her baby:\n\nTakes the morning train\nWorks from nine ’til five\nTakes another train home again\nFinds Sheena Easton waiting for him"
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#a-total-conflict-game-between-sheena-easton-and-her-baby",
+    "href": "presentations/beamer/beamer.html#a-total-conflict-game-between-sheena-easton-and-her-baby",
+    "title": "Pop Songs and Political Science",
+    "section": "A Total Conflict Game Between Sheena Easton and Her Baby",
+    "text": "A Total Conflict Game Between Sheena Easton and Her Baby\n\n\n\n\nStays Home\nGoes to Work\n\n\n\n\nBaby Home Again\n-100, 100\n100, 0\n\n\nBaby Stays at Work\n50, 0\n-100, 100\n\n\n\nSheena Easton and her baby are playing a zero-sum (total conflict) game.\n\nAkin to Holmes-Moriarty game (see: von Neumann and Morgenstern)\nSolution: mixed strategy"
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#rick-astleys-re-election-platform",
+    "href": "presentations/beamer/beamer.html#rick-astleys-re-election-platform",
+    "title": "Pop Songs and Political Science",
+    "section": "Rick Astley’s Re-election Platform",
+    "text": "Rick Astley’s Re-election Platform\nRick Astley’s campaign promises:\n\nNever gonna give you up.\nNever gonna let you down.\nNever gonna run around and desert you.\nNever gonna make you cry.\nNever gonna say goodbye.\nNever gonna tell a lie and hurt you.\n\nAre these promises (if credible) sufficient to secure re-election?"
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#rick-astley-and-median-voter-theorem",
+    "href": "presentations/beamer/beamer.html#rick-astley-and-median-voter-theorem",
+    "title": "Pop Songs and Political Science",
+    "section": "Rick Astley and Median Voter Theorem",
+    "text": "Rick Astley and Median Voter Theorem\nWhereas these pledges conform to the preferences of the median voter, we expect Congressman Astley to secure re-election."
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#caribbean-queen-and-operation-urgent-fury",
+    "href": "presentations/beamer/beamer.html#caribbean-queen-and-operation-urgent-fury",
+    "title": "Pop Songs and Political Science",
+    "section": "Caribbean Queen and Operation Urgent Fury",
+    "text": "Caribbean Queen and Operation Urgent Fury\nBilly Ocean released “Caribbean Queen” in 1984.\n\nEmphasized sharing the same dream\nHearts beating as one\n\n“Caribbean Queen” is about the poor execution of Operation Urgent Fury.\n\nEchoed JCS chairman David Jones’ frustrations with military establishment.\n\nBilly Ocean is advocating for what became the Goldwater-Nichols Act.\n\nWanted to take advantage of economies of scale, resolve coordination problems in U.S. military."
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#the-good-day-hypothesis",
+    "href": "presentations/beamer/beamer.html#the-good-day-hypothesis",
+    "title": "Pop Songs and Political Science",
+    "section": "The Good Day Hypothesis",
+    "text": "The Good Day Hypothesis\nWe know the following about Ice Cube’s day.\n\nThe Lakers beat the Supersonics.\nNo helicopter looked for a murder.\nConsumed Fatburger at 2 a.m.\nGoodyear blimp: “Ice Cube’s a pimp.”"
+  },
+  {
+    "objectID": "presentations/beamer/beamer.html#the-good-day-hypothesis-1",
+    "href": "presentations/beamer/beamer.html#the-good-day-hypothesis-1",
+    "title": "Pop Songs and Political Science",
+    "section": "The Good Day Hypothesis",
+    "text": "The Good Day Hypothesis\nThis leads to two different hypotheses:\n\n\\(H_0\\): Ice Cube’s day is statistically indistinguishable from a typical day.\n\\(H_1\\): Ice Cube is having a good (i.e. greater than average) day.\n\nThese hypotheses are tested using archival data of Ice Cube’s life."
+  },
+  {
+    "objectID": "presentations/revealjs/reveal.html",
+    "href": "presentations/revealjs/reveal.html",
+    "title": "Modernizing R&A Data Products With Python",
+    "section": "",
+    "text": "Background\nDesign and Implementation\nShowcase\nPath forward"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html",
+    "href": "presentations/powerpoint/powerpoint.html",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "Community.rstudio.com\nGithub.com/sol-eng\nSolutions.rstudio.com\nSupport.rstudio.com\nDocs.rstudio.com\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOpen source and reproducible research\nAPIs and interoperability\nUsability and clear documentation\nInclusive and collective success\nCreating lasting value for data science\n\n\n\n\n\n\n\n\nOur professional features include things like\n\nSecurity\nAuthentication\nLoad balancing\nSupport\n\n\n\n\n\n\nRStudio Server Pro\nRStudio Connect\nRStudio Package Manager\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nYou standardize on R first\nInstall our products second\n\n\n\n\n\n\n\n\n\n\n\nRecognize R as an analytic standard\n\n\n\n\n\nUnderstand and manage R tooling\n\n\n\n\n\nRely on integrated R based solutions\n\n\n\n\n\n\n\n\nR is relatively unknown in most organizations\nNo single place to get all the information you need\nHard to see the forest through the trees\n\n\n\n\n\nOrganizational hurdles\nResource limitations\n\n\n\n\n\n\n\n\nShare product requirements\nSome tips\nA path for getting started\n\nGoal is to give you a big picture view of what success looks like, assuming you are using RStudio professional products"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#solutions-engineering",
+    "href": "presentations/powerpoint/powerpoint.html#solutions-engineering",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "Community.rstudio.com\nGithub.com/sol-eng\nSolutions.rstudio.com\nSupport.rstudio.com\nDocs.rstudio.com"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#rstudio",
+    "href": "presentations/powerpoint/powerpoint.html#rstudio",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "Open source and reproducible research\nAPIs and interoperability\nUsability and clear documentation\nInclusive and collective success\nCreating lasting value for data science"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#what-we-do",
+    "href": "presentations/powerpoint/powerpoint.html#what-we-do",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "Our professional features include things like\n\nSecurity\nAuthentication\nLoad balancing\nSupport\n\n\n\n\n\n\nRStudio Server Pro\nRStudio Connect\nRStudio Package Manager"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#what-is-the-relationship-between-r-and-rstudio",
+    "href": "presentations/powerpoint/powerpoint.html#what-is-the-relationship-between-r-and-rstudio",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "You standardize on R first\nInstall our products second"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#professional-r-tooling-and-integration",
+    "href": "presentations/powerpoint/powerpoint.html#professional-r-tooling-and-integration",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "Recognize R as an analytic standard\n\n\n\n\n\nUnderstand and manage R tooling\n\n\n\n\n\nRely on integrated R based solutions"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#administering-rstudio-professional-products",
+    "href": "presentations/powerpoint/powerpoint.html#administering-rstudio-professional-products",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "R is relatively unknown in most organizations\nNo single place to get all the information you need\nHard to see the forest through the trees\n\n\n\n\n\nOrganizational hurdles\nResource limitations"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#outline",
+    "href": "presentations/powerpoint/powerpoint.html#outline",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "",
+    "text": "Share product requirements\nSome tips\nA path for getting started\n\nGoal is to give you a big picture view of what success looks like, assuming you are using RStudio professional products"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#keep-your-system-up-to-date",
+    "href": "presentations/powerpoint/powerpoint.html#keep-your-system-up-to-date",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "1. Keep your system up to date",
+    "text": "1. Keep your system up to date\n\nModern tools\n\nOperating system\nBrowsers\n\n\n\nC++11 compiler\n\nR packages on Linux must be compiled\n\n\n\nInternet access\n\nR packages"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#support-multiple-versions-of-r",
+    "href": "presentations/powerpoint/powerpoint.html#support-multiple-versions-of-r",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "2. Support multiple versions of R",
+    "text": "2. Support multiple versions of R\n\nWhy do you want to run multiple versions of R?\n\nManage upgrades of R\nTest code on a variety of R versions and distributions\nSupport projects that depend on various versions of R\nAll products support multiple versions of R\n\n\n\nUpgrade yearly (version 3.1.0+)\n\n\nBuild R from source\n\nMultiple versions of R side by side requires you build R from source\nNot hard to do (i.e. config/make/make install)\nInstructions"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#organize-your-r-packages",
+    "href": "presentations/powerpoint/powerpoint.html#organize-your-r-packages",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "3. Organize your R packages",
+    "text": "3. Organize your R packages\n\nR Packages rule the nest.\n\nPackages will drive your R version, Linux dependencies, and even your operating system\nData scientists will want access to their most beloved packages\n\n\n\nManaging packages for a single user is easy.\n\nManaging packages for an entire platform is hard\n\n\n\nRStudio Package Manager solves several problems\n\nDisconnected, air-gapped environments\nCurate packages into multiple repositories for security and control\nShare internal packages"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#use-root-privileges",
+    "href": "presentations/powerpoint/powerpoint.html#use-root-privileges",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "4. Use root privileges",
+    "text": "4. Use root privileges\nThe group in your organization that installs, configures, and manages R and RStudio will need root privileges\n\nRStudio products\n\nInstalls require root privileges\nRuns require root privileges\n\nRStudio Server Pro runs as the root user in order to create new R sessions on behalf of its users\nRStudio Connect runs as the root user in order to isolate applications and processes\n\n\n\n\nR\n\nSystem-wide installations of R on Linux often involve root also"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#securely-manage-your-users",
+    "href": "presentations/powerpoint/powerpoint.html#securely-manage-your-users",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "5. Securely manage your users",
+    "text": "5. Securely manage your users\n\nR programmers - RStudio Server Pro\n\nThey will need access to R, file shares, databases, and probably many other sensitive systems.\nR processes run as the user under a local account\n\n\n\nEnd users - RStudio Connect\n\nEnd users consume apps and reports.\nR Processes typically run under a service account"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#authentication",
+    "href": "presentations/powerpoint/powerpoint.html#authentication",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Authentication",
+    "text": "Authentication\n\nYour organization\n\nProbably has strong opinions on how to authenticate users\nThis space is only getting more fragmented not less\n\nLDAP, Active Directory, PAM, OAuth, Okta, Duo, Auth0, etc.\n\n\n\n\nProxied authentication\n\nIf we don’t support your specific system, then you can use our proxied authentication\nWith proxied auth, users do not log in through RStudio but through a proxy that you set up"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#supported-auth-methods",
+    "href": "presentations/powerpoint/powerpoint.html#supported-auth-methods",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Supported Auth Methods",
+    "text": "Supported Auth Methods\n\nRStudio Server Pro\n\nPAM (LDAP and Active Directory)\nOAuth 2.0 using Google Apps\nProxied authentication\n\n\n\nRStudio Connect\n\nLDAP and Active Directory\nOAuth 2.0 using Google Apps\nPAM\nSAML [Beta]\nProxied authentication"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#recommendations-your-happy-path",
+    "href": "presentations/powerpoint/powerpoint.html#recommendations-your-happy-path",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Recommendations (your Happy path)",
+    "text": "Recommendations (your Happy path)\n\n1. Keep your operating systems and browsers up to date\n\n\n2. Plan to support multiple versions of R by building R from source\n\n\n3. Organize your R packages for reliability and consistency\n\n\n4. Use root privileges to install and run RStudio products\n\n\n5. Securely manage your R programmers and end users"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#tooling",
+    "href": "presentations/powerpoint/powerpoint.html#tooling",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Tooling",
+    "text": "Tooling\n\nRStudio makes software tools that are designed to work together\n\nOur R packages and products work together\nThere are many ways to assemble our tools\nBut it will be up to you to decide how to do it\nYour configuration depends on what does data science means to your organization\n\nOur goal is to make it easy to install and configure all of our products"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#solutions",
+    "href": "presentations/powerpoint/powerpoint.html#solutions",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Solutions",
+    "text": "Solutions\n\nData science lab\n\n\nApplication factories (Dev/Test/Prod)\n\n\nOn premises, cloud, hybrid cloud\n\n\nSingle server or a multi-departmental deployment\n\n\nCrawl, walk, run strategies"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#architecture",
+    "href": "presentations/powerpoint/powerpoint.html#architecture",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Architecture",
+    "text": "Architecture"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#server-setup",
+    "href": "presentations/powerpoint/powerpoint.html#server-setup",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Server Setup",
+    "text": "Server Setup"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#recipes",
+    "href": "presentations/powerpoint/powerpoint.html#recipes",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Recipes",
+    "text": "Recipes\n\nOverview\n\nList of ingredients that make up your platform\nHelps you organize and automate your work\nAnd are unique to your organization\n\n\n\nStructure\n\nMost of your code will be for Linux, R, and R packages\nA small part of your code will be for installation\nIf you’ve installed R properly, installation is usually easy\nThe rest will be configuration"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#infrastructure-as-code",
+    "href": "presentations/powerpoint/powerpoint.html#infrastructure-as-code",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Infrastructure as code",
+    "text": "Infrastructure as code\n\nOrganize your recipes so that can manage your platform\n\nConfiguration management tools for the R admin\nAnsible, Chef, Puppet, CodeDeploy, SaltStack, etc.\nSandbox"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#rstudio-quickstart",
+    "href": "presentations/powerpoint/powerpoint.html#rstudio-quickstart",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "RStudio Quickstart",
+    "text": "RStudio Quickstart\n\nOverview\n\nA virtual machine that runs on your desktop\nIncludes all our professional products\nAnd includes pre built assets for you to explore and demonstrate to others\n\n\n\nMotivation\n\nExperience RStudio professional products\nFree and easy\n\nDemo"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#summary",
+    "href": "presentations/powerpoint/powerpoint.html#summary",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Summary",
+    "text": "Summary\n\nThe happy path\n\nKeep your operating system and browser up to date\nSupport multiple versions of R by building R from source\nMake sure you have easy access to R packages\nInstall products as root\nUse a supported authentication system\n\n\n\nHow to get started\n\nRecipes and checklists\nCrawl/Walk/Run strategies\nRStudio QuickStart"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#summary-1",
+    "href": "presentations/powerpoint/powerpoint.html#summary-1",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "Summary",
+    "text": "Summary\n\nConnecting with solutions engineering\n\nCommunity.rstudio.com\nGithub.com/sol-eng\nSolutions.rstudio.com\nSupport.rstudio.com\nDocs.rstudio.com"
+  },
+  {
+    "objectID": "presentations/powerpoint/powerpoint.html#references",
+    "href": "presentations/powerpoint/powerpoint.html#references",
+    "title": "Best Practices for Administering RStudio in Production",
+    "section": "References",
+    "text": "References\nAdministration of Pro Products\nProfessional R Tooling and Integration\nThe R Admin is Rad\nR Admin Community\nRStudio Docs\nRStudio Professional Product Requirements\nRStudio Server Pro Example Checklist\nR for the Enterprise\nConfiguration Management Tools for the R Admin"
   }
 ]

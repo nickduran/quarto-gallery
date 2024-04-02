@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nathan Stephens">
+
+<title>Best Practices for Administering RStudio in Production</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="powerpoint.pptx"><i class="bi bi-file-slides"></i>Powerpoint</a></li></ul></div></div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Best Practices for Administering RStudio in Production</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nathan Stephens </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="overview" class="level1">
+<h1>Overview</h1>
+<section id="solutions-engineering" class="level2">
+<h2 class="anchored" data-anchor-id="solutions-engineering">Solutions engineering</h2>
+<section id="we-help-you-integrate-rstudio-products-into-your-systems" class="level3">
+<h3 class="anchored" data-anchor-id="we-help-you-integrate-rstudio-products-into-your-systems">We help you integrate RStudio products into your systems</h3>
+</section>
+<section id="our-team" class="level3">
+<h3 class="anchored" data-anchor-id="our-team">Our team</h3>
+</section>
+<section id="where-do-we-hang-out" class="level3">
+<h3 class="anchored" data-anchor-id="where-do-we-hang-out">Where do we hang out?</h3>
+<ul>
+<li><a href="http://community.rstudio.com">Community.rstudio.com</a></li>
+<li><a href="http://">Github.com/sol-eng</a></li>
+<li><a href="http://solutions.rstudio.com">Solutions.rstudio.com</a></li>
+<li><a href="http://support.rstudio.com">Support.rstudio.com</a></li>
+<li><a href="docs.rstudio.com">Docs.rstudio.com</a></li>
+</ul>
+</section>
+</section>
+<section id="who-is-this-webinar-for" class="level2">
+<h2 class="anchored" data-anchor-id="who-is-this-webinar-for">Who is this webinar for?</h2>
+<section id="r-admin-data-scientists-who-want-to-do-more" class="level3">
+<h3 class="anchored" data-anchor-id="r-admin-data-scientists-who-want-to-do-more">R Admin – data scientists who want to do more</h3>
+</section>
+<section id="r-evangelists" class="level3">
+<h3 class="anchored" data-anchor-id="r-evangelists">R Evangelists</h3>
+</section>
+<section id="itops" class="level3">
+<h3 class="anchored" data-anchor-id="itops">IT/Ops</h3>
+</section>
+<section id="anyone-who-wants-to-try-rstudio-professional-products" class="level3">
+<h3 class="anchored" data-anchor-id="anyone-who-wants-to-try-rstudio-professional-products">Anyone who wants to try RStudio professional products</h3>
+</section>
+</section>
+<section id="rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio">RStudio</h2>
+<section id="rstudio-empowers-individuals-to-be-productive-with-data-science." class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-empowers-individuals-to-be-productive-with-data-science.">RStudio empowers individuals to be productive with data science.</h3>
+<ul>
+<li>Open source and reproducible research</li>
+<li>APIs and interoperability</li>
+<li>Usability and clear documentation</li>
+<li>Inclusive and collective success</li>
+<li>Creating lasting value for data science</li>
+</ul>
+</section>
+</section>
+<section id="what-we-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-do">What we do</h2>
+<section id="rstudio-builds-open-source-and-professional-software-for-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-builds-open-source-and-professional-software-for-data-science">RStudio builds open source and professional software for data science</h3>
+<ul>
+<li><p>Our professional features include things like</p>
+<ul>
+<li>Security</li>
+<li>Authentication</li>
+<li>Load balancing</li>
+<li>Support</li>
+</ul></li>
+</ul>
+</section>
+<section id="rstudio-professional-products" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-professional-products">RStudio professional products</h3>
+<ul>
+<li>RStudio Server Pro</li>
+<li>RStudio Connect</li>
+<li>RStudio Package Manager</li>
+</ul>
+</section>
+</section>
+<section id="what-is-the-relationship-between-r-and-rstudio" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-relationship-between-r-and-rstudio">What is the relationship between R and RStudio?</h2>
+<section id="we-dont-own-r-package-r-or-distribute-r" class="level3">
+<h3 class="anchored" data-anchor-id="we-dont-own-r-package-r-or-distribute-r">We don’t own R, package R, or distribute R</h3>
+</section>
+<section id="r-core-team-20-members-zero-from-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="r-core-team-20-members-zero-from-rstudio">R Core team: 20 members – Zero from RStudio</h3>
+</section>
+<section id="rstudio-products-sit-on-top-of-r" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-products-sit-on-top-of-r">RStudio products “sit on top of R”</h3>
+<ul>
+<li>You standardize on R first</li>
+<li>Install our products second</li>
+</ul>
+</section>
+<section id="we-assume-you-have-chosen-to-invest-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="we-assume-you-have-chosen-to-invest-in-r">We assume you have chosen to invest in R</h3>
+</section>
+</section>
+<section id="professional-r-tooling-and-integration" class="level2">
+<h2 class="anchored" data-anchor-id="professional-r-tooling-and-integration">Professional R tooling and integration</h2>
+<section id="legitimacy" class="level3">
+<h3 class="anchored" data-anchor-id="legitimacy">Legitimacy</h3>
+<ul>
+<li>Recognize R as an analytic standard</li>
+</ul>
+</section>
+<section id="competencies" class="level3">
+<h3 class="anchored" data-anchor-id="competencies">Competencies*</h3>
+<ul>
+<li>Understand and manage R tooling</li>
+</ul>
+</section>
+<section id="adoption" class="level3">
+<h3 class="anchored" data-anchor-id="adoption">Adoption</h3>
+<ul>
+<li>Rely on integrated R based solutions</li>
+</ul>
+</section>
+</section>
+<section id="administering-rstudio-professional-products" class="level2">
+<h2 class="anchored" data-anchor-id="administering-rstudio-professional-products">Administering RStudio professional products</h2>
+<section id="people-want-to-know-if-they-are-doing-things-the-best-way" class="level3">
+<h3 class="anchored" data-anchor-id="people-want-to-know-if-they-are-doing-things-the-best-way">People want to know if they are doing things the best way</h3>
+<ul>
+<li>R is relatively unknown in most organizations</li>
+<li>No single place to get all the information you need</li>
+<li>Hard to see the forest through the trees</li>
+</ul>
+</section>
+<section id="we-see-a-lot-of-trial-and-error" class="level3">
+<h3 class="anchored" data-anchor-id="we-see-a-lot-of-trial-and-error">We see a lot of trial and error</h3>
+<ul>
+<li>Organizational hurdles</li>
+<li>Resource limitations</li>
+</ul>
+</section>
+</section>
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<section id="i-want-to-share-some-best-practices-for-managing-rstudio-in-production" class="level3">
+<h3 class="anchored" data-anchor-id="i-want-to-share-some-best-practices-for-managing-rstudio-in-production">I want to share some best practices for managing RStudio in production</h3>
+<ul>
+<li>Share product requirements</li>
+<li>Some tips</li>
+<li>A path for getting started</li>
+</ul>
+<p>Goal is to give you a big picture view of what success looks like, assuming you are using RStudio professional products</p>
+</section>
+</section>
+</section>
+<section id="best-practices-for-administering-rstudio-in-production" class="level1">
+<h1>5 Best practices for administering RStudio in production</h1>
+<section id="keep-your-system-up-to-date" class="level2">
+<h2 class="anchored" data-anchor-id="keep-your-system-up-to-date">1. Keep your system up to date</h2>
+<section id="modern-tools" class="level3">
+<h3 class="anchored" data-anchor-id="modern-tools">Modern tools</h3>
+<ul>
+<li>Operating system</li>
+<li>Browsers</li>
+</ul>
+</section>
+<section id="c11-compiler" class="level3">
+<h3 class="anchored" data-anchor-id="c11-compiler">C++11 compiler</h3>
+<ul>
+<li>R packages on Linux must be compiled</li>
+</ul>
+</section>
+<section id="internet-access" class="level3">
+<h3 class="anchored" data-anchor-id="internet-access">Internet access</h3>
+<ul>
+<li>R packages</li>
+</ul>
+</section>
+</section>
+<section id="support-multiple-versions-of-r" class="level2">
+<h2 class="anchored" data-anchor-id="support-multiple-versions-of-r">2. Support multiple versions of R</h2>
+<section id="why-do-you-want-to-run-multiple-versions-of-r" class="level3">
+<h3 class="anchored" data-anchor-id="why-do-you-want-to-run-multiple-versions-of-r">Why do you want to run multiple versions of R?</h3>
+<ul>
+<li>Manage upgrades of R</li>
+<li>Test code on a variety of R versions and distributions</li>
+<li>Support projects that depend on various versions of R</li>
+<li>All products support multiple versions of R</li>
+</ul>
+</section>
+<section id="upgrade-yearly-version-3.1.0" class="level3">
+<h3 class="anchored" data-anchor-id="upgrade-yearly-version-3.1.0">Upgrade yearly (version 3.1.0+)</h3>
+</section>
+<section id="build-r-from-source" class="level3">
+<h3 class="anchored" data-anchor-id="build-r-from-source">Build R from source</h3>
+<ul>
+<li>Multiple versions of R side by side requires you build R from source</li>
+<li>Not hard to do (i.e.&nbsp;config/make/make install)</li>
+<li><a href="https://support.rstudio.com/hc/en-us/articles/360002242413-Multiple-versions-of-R">Instructions</a></li>
+</ul>
+</section>
+</section>
+<section id="organize-your-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="organize-your-r-packages">3. Organize your R packages</h2>
+<section id="r-packages-rule-the-nest." class="level3">
+<h3 class="anchored" data-anchor-id="r-packages-rule-the-nest.">R Packages rule the nest.</h3>
+<ul>
+<li>Packages will drive your R version, Linux dependencies, and even your operating system</li>
+<li>Data scientists will want access to their most beloved packages</li>
+</ul>
+</section>
+<section id="managing-packages-for-a-single-user-is-easy." class="level3">
+<h3 class="anchored" data-anchor-id="managing-packages-for-a-single-user-is-easy.">Managing packages for a single user is easy.</h3>
+<ul>
+<li>Managing packages for an entire platform is hard</li>
+</ul>
+</section>
+<section id="rstudio-package-manager-solves-several-problems" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-package-manager-solves-several-problems">RStudio Package Manager solves several problems</h3>
+<ul>
+<li>Disconnected, air-gapped environments</li>
+<li>Curate packages into multiple repositories for security and control</li>
+<li>Share internal packages</li>
+</ul>
+</section>
+</section>
+<section id="use-root-privileges" class="level2">
+<h2 class="anchored" data-anchor-id="use-root-privileges">4. Use root privileges</h2>
+<p>The group in your organization that installs, configures, and manages R and RStudio will need root privileges</p>
+<section id="rstudio-products" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-products">RStudio products</h3>
+<ul>
+<li>Installs require root privileges</li>
+<li>Runs require root privileges
+<ul>
+<li>RStudio Server Pro runs as the root user in order to create new R sessions on behalf of its users</li>
+<li>RStudio Connect runs as the root user in order to isolate applications and processes</li>
+</ul></li>
+</ul>
+</section>
+<section id="r" class="level3">
+<h3 class="anchored" data-anchor-id="r">R</h3>
+<ul>
+<li>System-wide installations of R on Linux often involve root also</li>
+</ul>
+</section>
+</section>
+<section id="securely-manage-your-users" class="level2">
+<h2 class="anchored" data-anchor-id="securely-manage-your-users">5. Securely manage your users</h2>
+<section id="r-programmers---rstudio-server-pro" class="level3">
+<h3 class="anchored" data-anchor-id="r-programmers---rstudio-server-pro">R programmers - RStudio Server Pro</h3>
+<ul>
+<li>They will need access to R, file shares, databases, and probably many other sensitive systems.</li>
+<li>R processes run as the user under a local account</li>
+</ul>
+</section>
+<section id="end-users---rstudio-connect" class="level3">
+<h3 class="anchored" data-anchor-id="end-users---rstudio-connect">End users - RStudio Connect</h3>
+<ul>
+<li>End users consume apps and reports.</li>
+<li>R Processes typically run under a service account</li>
+</ul>
+</section>
+</section>
+<section id="authentication" class="level2">
+<h2 class="anchored" data-anchor-id="authentication">Authentication</h2>
+<section id="your-organization" class="level3">
+<h3 class="anchored" data-anchor-id="your-organization">Your organization</h3>
+<ul>
+<li>Probably has strong opinions on how to authenticate users</li>
+<li>This space is only getting more fragmented not less
+<ul>
+<li>LDAP, Active Directory, PAM, OAuth, Okta, Duo, Auth0, etc.</li>
+</ul></li>
+</ul>
+</section>
+<section id="proxied-authentication" class="level3">
+<h3 class="anchored" data-anchor-id="proxied-authentication">Proxied authentication</h3>
+<ul>
+<li>If we don’t support your specific system, then you can use our proxied authentication</li>
+<li>With proxied auth, users do not log in through RStudio but through a proxy that you set up</li>
+</ul>
+</section>
+</section>
+<section id="supported-auth-methods" class="level2">
+<h2 class="anchored" data-anchor-id="supported-auth-methods">Supported Auth Methods</h2>
+<section id="rstudio-server-pro" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-server-pro">RStudio Server Pro</h3>
+<ul>
+<li>PAM (LDAP and Active Directory)</li>
+<li>OAuth 2.0 using Google Apps</li>
+<li><em>Proxied authentication</em></li>
+</ul>
+</section>
+<section id="rstudio-connect" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-connect">RStudio Connect</h3>
+<ul>
+<li>LDAP and Active Directory</li>
+<li>OAuth 2.0 using Google Apps</li>
+<li>PAM</li>
+<li>SAML [Beta]</li>
+<li><em>Proxied authentication</em></li>
+</ul>
+</section>
+</section>
+<section id="recommendations-your-happy-path" class="level2">
+<h2 class="anchored" data-anchor-id="recommendations-your-happy-path">Recommendations (your Happy path)</h2>
+<section id="keep-your-operating-systems-and-browsers-up-to-date" class="level3">
+<h3 class="anchored" data-anchor-id="keep-your-operating-systems-and-browsers-up-to-date">1. Keep your operating systems and browsers up to date</h3>
+</section>
+<section id="plan-to-support-multiple-versions-of-r-by-building-r-from-source" class="level3">
+<h3 class="anchored" data-anchor-id="plan-to-support-multiple-versions-of-r-by-building-r-from-source">2. Plan to support multiple versions of R by building R from source</h3>
+</section>
+<section id="organize-your-r-packages-for-reliability-and-consistency" class="level3">
+<h3 class="anchored" data-anchor-id="organize-your-r-packages-for-reliability-and-consistency">3. Organize your R packages for reliability and consistency</h3>
+</section>
+<section id="use-root-privileges-to-install-and-run-rstudio-products" class="level3">
+<h3 class="anchored" data-anchor-id="use-root-privileges-to-install-and-run-rstudio-products">4. Use root privileges to install and run RStudio products</h3>
+</section>
+<section id="securely-manage-your-r-programmers-and-end-users" class="level3">
+<h3 class="anchored" data-anchor-id="securely-manage-your-r-programmers-and-end-users">5. Securely manage your R programmers and end users</h3>
+</section>
+</section>
+</section>
+<section id="getting-started" class="level1">
+<h1>Getting Started</h1>
+<section id="tooling" class="level2">
+<h2 class="anchored" data-anchor-id="tooling">Tooling</h2>
+<section id="rstudio-makes-software-tools-that-are-designed-to-work-together" class="level3">
+<h3 class="anchored" data-anchor-id="rstudio-makes-software-tools-that-are-designed-to-work-together">RStudio makes software tools that are designed to work together</h3>
+<ul>
+<li>Our R packages and products work together</li>
+<li>There are many ways to assemble our tools</li>
+<li>But it will be up to you to decide how to do it</li>
+<li>Your configuration depends on what does data science means to your organization</li>
+</ul>
+<p>Our goal is to make it easy to install and configure all of our products</p>
+</section>
+</section>
+<section id="solutions" class="level2">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section id="data-science-lab" class="level3">
+<h3 class="anchored" data-anchor-id="data-science-lab">Data science lab</h3>
+</section>
+<section id="application-factories-devtestprod" class="level3">
+<h3 class="anchored" data-anchor-id="application-factories-devtestprod">Application factories (Dev/Test/Prod)</h3>
+</section>
+<section id="on-premises-cloud-hybrid-cloud" class="level3">
+<h3 class="anchored" data-anchor-id="on-premises-cloud-hybrid-cloud">On premises, cloud, hybrid cloud</h3>
+</section>
+<section id="single-server-or-a-multi-departmental-deployment" class="level3">
+<h3 class="anchored" data-anchor-id="single-server-or-a-multi-departmental-deployment">Single server or a multi-departmental deployment</h3>
+</section>
+<section id="crawl-walk-run-strategies" class="level3">
+<h3 class="anchored" data-anchor-id="crawl-walk-run-strategies">Crawl, walk, run strategies</h3>
+</section>
+</section>
+<section id="architecture" class="level2">
+<h2 class="anchored" data-anchor-id="architecture">Architecture</h2>
+<p><img src="ref-arch.png" class="img-fluid"></p>
+</section>
+<section id="server-setup" class="level2">
+<h2 class="anchored" data-anchor-id="server-setup">Server Setup</h2>
+<p><img src="servers.png" class="img-fluid"></p>
+</section>
+<section id="recipes" class="level2">
+<h2 class="anchored" data-anchor-id="recipes">Recipes</h2>
+<section id="overview-1" class="level3">
+<h3 class="anchored" data-anchor-id="overview-1">Overview</h3>
+<ul>
+<li>List of ingredients that make up your platform</li>
+<li>Helps you organize and automate your work</li>
+<li>And are unique to your organization</li>
+</ul>
+</section>
+<section id="structure" class="level3">
+<h3 class="anchored" data-anchor-id="structure">Structure</h3>
+<ul>
+<li>Most of your code will be for Linux, R, and R packages</li>
+<li>A small part of your code will be for installation</li>
+<li>If you’ve installed R properly, installation is usually easy</li>
+<li>The rest will be configuration</li>
+</ul>
+</section>
+</section>
+<section id="infrastructure-as-code" class="level2">
+<h2 class="anchored" data-anchor-id="infrastructure-as-code">Infrastructure as code</h2>
+<section id="organize-your-recipes-so-that-can-manage-your-platform" class="level3">
+<h3 class="anchored" data-anchor-id="organize-your-recipes-so-that-can-manage-your-platform">Organize your recipes so that can manage your platform</h3>
+<ul>
+<li><a href="https://resources.rstudio.com/rstudio-server-pro/configuration-management-tools-for-the-r-admin">Configuration management tools for the R admin</a></li>
+<li>Ansible, Chef, Puppet, CodeDeploy, SaltStack, etc.</li>
+<li>Sandbox</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="what-if-ive-never-used-these-products" class="level1">
+<h1>What if I’ve never used these products?</h1>
+<section id="rstudio-quickstart" class="level2">
+<h2 class="anchored" data-anchor-id="rstudio-quickstart">RStudio Quickstart</h2>
+<section id="overview-2" class="level3">
+<h3 class="anchored" data-anchor-id="overview-2">Overview</h3>
+<ul>
+<li>A virtual machine that runs on your desktop</li>
+<li>Includes all our professional products</li>
+<li>And includes pre built assets for you to explore and demonstrate to others</li>
+</ul>
+</section>
+<section id="motivation" class="level3">
+<h3 class="anchored" data-anchor-id="motivation">Motivation</h3>
+<ul>
+<li>Experience RStudio professional products</li>
+<li>Free and easy</li>
+</ul>
+<p><a href="https://www.rstudio.com/products/quickstart/">Demo</a></p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<section id="the-happy-path" class="level3">
+<h3 class="anchored" data-anchor-id="the-happy-path">The happy path</h3>
+<ul>
+<li>Keep your operating system and browser up to date</li>
+<li>Support multiple versions of R by building R from source</li>
+<li>Make sure you have easy access to R packages</li>
+<li>Install products as root</li>
+<li>Use a supported authentication system</li>
+</ul>
+</section>
+<section id="how-to-get-started" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-get-started">How to get started</h3>
+<ul>
+<li>Recipes and <a href="https://support.rstudio.com/hc/en-us/articles/360015079054">checklists</a></li>
+<li>Crawl/Walk/Run strategies</li>
+<li><a href="https://www.rstudio.com/products/quickstart/">RStudio QuickStart</a></li>
+</ul>
+</section>
+</section>
+<section id="summary-1" class="level2">
+<h2 class="anchored" data-anchor-id="summary-1">Summary</h2>
+<section id="connecting-with-solutions-engineering" class="level3">
+<h3 class="anchored" data-anchor-id="connecting-with-solutions-engineering">Connecting with solutions engineering</h3>
+<ul>
+<li><a href="https://community.rstudio.com/">Community.rstudio.com</a></li>
+<li><a href="http://">Github.com/sol-eng</a></li>
+<li><a href="http://solutions.rstudio.com">Solutions.rstudio.com</a></li>
+<li><a href="http://support.rstudio.com">Support.rstudio.com</a></li>
+<li><a href="docs.rstudio.com">Docs.rstudio.com</a></li>
+</ul>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p><a href="https://resources.rstudio.com/administration-of-pro-products">Administration of Pro Products</a></p>
+<p><a href="https://resources.rstudio.com/webinars/2018-07-11-13-00-professional-r-tooling-and-integration-nathan-stephens-1">Professional R Tooling and Integration</a></p>
+<p><a href="https://resources.rstudio.com/rstudio-conf-2018/the-r-admin-is-rad-a-guide-to-professional-r-tooling-and-integration-nathan-stephens">The R Admin is Rad</a></p>
+<p><a href="https://community.rstudio.com/c/r-admin">R Admin Community</a></p>
+<p><a href="https://docs.rstudio.com/resources.html">RStudio Docs</a></p>
+<p><a href="https://support.rstudio.com/hc/en-us/articles/360015177453-RStudio-professional-product-requirements">RStudio Professional Product Requirements</a></p>
+<p><a href="https://support.rstudio.com/hc/en-us/articles/360015079054-RStudio-Server-Pro-Installation-and-Configuration-Example-Checklist">RStudio Server Pro Example Checklist</a></p>
+<p><a href="https://rviews.rstudio.com/categories/r-for-the-enterprise/">R for the Enterprise</a></p>
+<p><a href="https://resources.rstudio.com/rstudio-server-pro/configuration-management-tools-for-the-r-admin">Configuration Management Tools for the R Admin</a></p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
